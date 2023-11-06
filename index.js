@@ -85,6 +85,7 @@ async function run() {
         $set: {
           pdf: updatedAssignment.pdf,
           note: updatedAssignment.note,
+          status: updatedAssignment.status,
         }
       }
       const result = await assignmentCollection.updateOne(filter, product, options);
