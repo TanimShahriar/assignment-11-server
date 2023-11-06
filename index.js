@@ -65,10 +65,26 @@ async function run() {
         $set: {
           description: updatedAssignment.description,
           marks: updatedAssignment.marks,
-          title: updatedAssignment.title,
+          name: updatedAssignment.name,
           imgUrl: updatedAssignment.imgUrl,
           difficultyLevel: updatedAssignment.difficultyLevel,
           dueDate: updatedAssignment.dueDate
+        }
+      }
+      const result = await assignmentCollection.updateOne(filter, product, options);
+      res.send(result);
+    })
+
+
+    app.put("/news/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) }
+      const options = { upsert: true };
+      const updatedAssignment = req.body;
+      const product = {
+        $set: {
+          pdf: updatedAssignment.pdf,
+          note: updatedAssignment.note,
         }
       }
       const result = await assignmentCollection.updateOne(filter, product, options);
