@@ -32,11 +32,19 @@ async function run() {
 
 
 
-    // app.get("/assignment", async (req, res) => {
-    //   const cursor = assignmentCollection.find();
-    //   const result = await cursor.toArray();
-    //   res.send(result);
-    // })
+    app.get("/assignment", async (req, res) => {
+      const cursor = assignmentCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
+
+    app.get("/assignment/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await assignmentCollection.findOne(query);
+      res.send(result);
+    })
 
 
 
@@ -48,6 +56,24 @@ async function run() {
     })
 
 
+    app.put("/assignment/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) }
+      const options = { upsert: true };
+      const updatedAssignment = req.body;
+      const product = {
+        $set: {
+          description: updatedAssignment.description,
+          marks: updatedAssignment.marks,
+          title: updatedAssignment.title,
+          imgUrl: updatedAssignment.imgUrl,
+          difficultyLevel: updatedAssignment.difficultyLevel,
+          dueDate: updatedAssignment.dueDate
+        }
+      }
+      const result = await assignmentCollection.updateOne(filter, product, options);
+      res.send(result);
+    })
 
 
 
