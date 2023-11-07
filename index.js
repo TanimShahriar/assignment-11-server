@@ -83,8 +83,28 @@ async function run() {
       const updatedAssignment = req.body;
       const product = {
         $set: {
+          takeAssignEmail: updatedAssignment.takeAssignEmail,
+          examineeName: updatedAssignment.examineeName,
           pdf: updatedAssignment.pdf,
           note: updatedAssignment.note,
+          status: updatedAssignment.status,
+        }
+      }
+      const result = await assignmentCollection.updateOne(filter, product, options);
+      res.send(result);
+    })
+
+
+    app.put("/marks/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) }
+      const options = { upsert: true };
+      const updatedAssignment = req.body;
+      const product = {
+        $set: {
+          giveMarksEmail: updatedAssignment.giveMarksEmail,
+          obtainedMarks: updatedAssignment.obtainedMarks,
+          feedback: updatedAssignment.feedback,
           status: updatedAssignment.status,
         }
       }
