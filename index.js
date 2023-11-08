@@ -77,41 +77,15 @@ async function run() {
     })
 
 
-    // app.put("/news/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const filter = { _id: new ObjectId(id) }
-    //   const options = { upsert: true };
-    //   const updatedAssignment = req.body;
-    //   const product = {
-    //     $set: {
-    //       takeAssignEmail: updatedAssignment.takeAssignEmail,
-    //       examineeName: updatedAssignment.examineeName,
-    //       pdf: updatedAssignment.pdf,
-    //       note: updatedAssignment.note,
-    //       status: updatedAssignment.status,
-    //     }
-    //   }
-    //   const result = await assignmentCollection.updateOne(filter, product, options);
-    //   res.send(result);
-    // })
+    app.delete("/assignment/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await assignmentCollection.deleteOne(query);
+      res.send(result);
+    })
 
 
-    // app.put("/marks/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const filter = { _id: new ObjectId(id) }
-    //   const options = { upsert: true };
-    //   const updatedAssignment = req.body;
-    //   const product = {
-    //     $set: {
-    //       giveMarksEmail: updatedAssignment.giveMarksEmail,
-    //       obtainedMarks: updatedAssignment.obtainedMarks,
-    //       feedback: updatedAssignment.feedback,
-    //       status: updatedAssignment.status,
-    //     }
-    //   }
-    //   const result = await assignmentCollection.updateOne(filter, product, options);
-    //   res.send(result);
-    // })
+
 
     //report card collection
     app.post("/report", async (req, res) => {
@@ -167,7 +141,7 @@ async function run() {
     // await client.close();
   }
 }
-run().catch(console.dir);
+run().catch(console.dir)
 
 
 app.get("/", (req, res) => {
